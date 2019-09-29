@@ -9,7 +9,27 @@
 # sdrw is the variability in the drift rate (default value is 0.3)
 # criterion is the threshold for a response (default value is 3)
 
+
+#-NOT INCLUDED: non-decision time; starting bias
+
 random.walk.model <- function(samples, drift=0, sdrw=0.3, criterion=3){
+  rt.array <- c()
+  accuracy.array <- c()
+  for(i in 1:samples){
+    steps <- 0
+    current.sum <- 0
+    correctness <- FALSE
+    while((abs(current.sum) <= criterion)){
+      current.sum <- current.sum + rnorm(1, drift, sdrw)
+      steps <- steps + 1
+    }
+    if(current.sum >= criterion) {
+      correctness <- TRUE
+    }
+    accuracy.array <- c(accuracy.array, correctness)
+    rt.array <- c(rt.array, steps)
+    
+  }
   
   output <- data.frame(
     correct = accuracy.array,
