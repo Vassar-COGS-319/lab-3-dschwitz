@@ -1,3 +1,64 @@
+#Random Walk
+
+random.walk.model <- function(samples, drift=0, sdrw=0.3, criterion=3){
+  rt.array <- c()
+  accuracy.array <- c()
+  for(i in 1:samples){
+    steps <- 0
+    current.sum <- 0
+    correctness <- FALSE
+    while((abs(current.sum) <= criterion)){
+      current.sum <- current.sum + rnorm(1, drift, sdrw)
+      steps <- steps + 1
+    }
+    if(current.sum >= criterion) {
+      correctness <- TRUE
+    }
+    accuracy.array <- c(accuracy.array, correctness)
+    rt.array <- c(rt.array, steps)
+    
+  }
+  
+  output <- data.frame(
+    correct = accuracy.array,
+    rt = rt.array
+  )
+  
+  return(output)
+}
+
+#Accumulator
+
+accumulator.model <- function(samples, rate.1=40, rate.2=40, criterion=3){
+  
+  rt.array <- c()
+  accuracy.array <- c()
+  for(i in 1:samples){
+    sum.1 <- 0
+    sum.2 <- 0
+    steps <- 0
+    correctness <- FALSE
+    while((sum.1 <= criterion) && (sum.2 <= criterion)){
+      sum.1 <- sum.1 + rexp(1, rate.1)
+      sum.2 <- sum.2 + rexp(1, rate.2)
+      steps <- steps + 1
+    }
+    if((sum.1 >= criterion) && (sum.1 >= sum.2)) {
+      correctness <- TRUE
+    }
+    accuracy.array <- c(accuracy.array, correctness)
+    rt.array <- c(rt.array, steps)
+    
+  }
+  
+  output <- data.frame(
+    correct = accuracy.array,
+    rt = rt.array
+  )
+  
+  return(output)
+}
+
 # model selection ####
 
 # suppose we have data from an experiment like this:
