@@ -1,4 +1,4 @@
-# implement the model by filling in the function below
+###########################################################################
 # the model should return a data frame with two columns: correct and rt
 # the correct column should be TRUE or FALSE, and rt should contain the
 # number of steps it took to reach the criterion.
@@ -16,7 +16,26 @@
 
 accumulator.model <- function(samples, rate.1=40, rate.2=40, criterion=3){
   
-
+  rt.array <- c()
+  accuracy.array <- c()
+  for(i in 1:samples){
+    sum.1 <- 0
+    sum.2 <- 0
+    steps <- 0
+    correctness <- FALSE
+    while((sum.1 <= criterion) && (sum.2 <= criterion)){
+      sum.1 <- sum.1 + rexp(1, rate.1)
+      sum.2 <- sum.2 + rexp(1, rate.2)
+      steps <- steps + 1
+    }
+    if((sum.1 >= criterion) && (sum.1 >= sum.2)) {
+      correctness <- TRUE
+    }
+    accuracy.array <- c(accuracy.array, correctness)
+    rt.array <- c(rt.array, steps)
+    
+  }
+  
   output <- data.frame(
     correct = accuracy.array,
     rt = rt.array
