@@ -1,4 +1,16 @@
-#Random Walk
+################### Revisions: ##################### 
+
+## The parameters (.0125/4.91, 83.4/90) I chose are extremely close to yours.
+## Furthermore, my models approximate the experiment data (i.e., fit) similarly to
+## yours, indicating that my modeling approaches and parameters are valid.
+## I also draw the same conclusions from the histograms as you did - the RW
+## model seems more skewed, while the acc model seems more normally/symetrically
+## distributed. However, I draw a different conclusion about the relative
+## efficacy of each model for fitting the data - while you conclude that
+## neither model is preferable, I conclude that the random walk model
+## is preferable. Although it's impossible for me to reliably determine
+## whether or not my answer is "right," I did struggle far more to fit the
+## data with the acc model than with the RW model. 
 
 random.walk.model <- function(samples, drift=0, sdrw=0.3, criterion=3){
   rt.array <- c()
@@ -77,6 +89,8 @@ accumulator.model <- function(samples, rate.1=40, rate.2=40, criterion=3){
 
 library(dplyr)
 
+set.seed(12604)
+
 walk.test <- random.walk.model(10000, drift=.0125, criterion= 4.91)
 
 sum(walk.test$correct) / length(walk.test$correct) 
@@ -128,4 +142,3 @@ hist(accumulator.test$rt)
 #a strongly right-skewed distribution. Based on the distribution of data produced
 #by the empirical test (i.e., the data to which we are fitting models), we
 #can identify which model produces a similar shape. 
-
