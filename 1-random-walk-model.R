@@ -1,3 +1,6 @@
+################### Revisions: ##################### 
+## No revisions were necessary; my code is functionally equivalent to yours.
+
 # implement the model by filling in the function below
 # the model should return a data frame with two columns: correct and rt
 # the correct column should be TRUE or FALSE, and rt should contain the
